@@ -2,10 +2,7 @@
 
 namespace app\models;
 
-use app\models\query\PublicationQuery;
 use Yii;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%publication}}".
@@ -16,7 +13,7 @@ use yii\db\ActiveRecord;
  * @property int|null $status Статус публикации
  * @property string $updated_at Дата изменения
  */
-class Publication extends ActiveRecord
+class Publication extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -24,21 +21,6 @@ class Publication extends ActiveRecord
     public static function tableName()
     {
         return '{{%publication}}';
-    }
-
-    /**
-     *
-     * {@inheritDoc}
-     * @return array
-     */
-    public function behaviors()
-    {
-        return [
-            'timestamp' => [
-                'class' => TimestampBehavior::class,
-                'createdAtAttribute' => false
-            ]
-        ];
     }
 
     /**
@@ -69,10 +51,10 @@ class Publication extends ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return PublicationQuery the active query used by this AR class.
+     * @return \app\models\query\PublicationQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new PublicationQuery(get_called_class());
+        return new \app\models\query\PublicationQuery(get_called_class());
     }
 }

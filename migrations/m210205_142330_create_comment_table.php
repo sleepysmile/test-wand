@@ -14,6 +14,7 @@ class m210205_142330_create_comment_table extends Migration
     {
         $this->createTable('{{%comment}}', [
             'id' => $this->primaryKey(),
+            'text' => $this->string()->comment('Текст комментария')
         ]);
     }
 
