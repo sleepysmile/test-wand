@@ -4,6 +4,7 @@ namespace app\models;
 
 use app\models\query\PublicationQuery;
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
@@ -23,6 +24,21 @@ class Publication extends ActiveRecord
     public static function tableName()
     {
         return '{{%publication}}';
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     * @return array
+     */
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => false
+            ]
+        ];
     }
 
     /**
