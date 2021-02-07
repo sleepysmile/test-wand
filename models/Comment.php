@@ -76,6 +76,8 @@ class Comment extends ActiveRecord
     }
 
     /**
+     * Декодировать данные модели родителя
+     *
      * @param string $encodeData
      * @return false|string[]
      */
@@ -87,6 +89,8 @@ class Comment extends ActiveRecord
     }
 
     /**
+     * Закодировать данные модели родителя
+     *
      * @param Comments $model
      * @return string
      */
