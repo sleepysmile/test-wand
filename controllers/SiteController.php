@@ -2,8 +2,13 @@
 
 namespace app\controllers;
 
+use app\actions\CreateCommentAction;
+use app\models\Comment;
+use app\models\Publication;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -61,7 +66,42 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $publicationQuery = Publication::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $publicationQuery
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider
+        ]);
+    }
+
+    /**
+     * Страница просмотра
+     *
+     * @param int $id
+     * @return string
+     */
+    public function actionView(int $id)
+    {
+        $publication = $this->findModel($id);
+
+        return $this->render('view', [
+            'publication' => $publication
+        ]);
+    }
+
+    /**
+     * Поиск записи
+     *
+     * @param int $id
+     * @return Publication|array|null
+     */
+    protected function findModel(int $id)
+    {
+        return Publication::find()
+            ->andWhere(['id' => $id])
+            ->one();
     }
 
 }

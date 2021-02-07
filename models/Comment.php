@@ -2,8 +2,8 @@
 
 namespace app\models;
 
+use app\interfaces\Comments;
 use app\models\query\CommentQuery;
-use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -11,6 +11,8 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property string|null $text Текст комментария
+ * @property string $owner_class Класс модели владельца комметария
+ * @property int $owner_id ID модели владельца комметария
  */
 class Comment extends ActiveRecord
 {
@@ -28,7 +30,8 @@ class Comment extends ActiveRecord
     public function rules()
     {
         return [
-            [['text'], 'string', 'max' => 255],
+            [['text', 'owner_class'], 'string', 'max' => 255],
+            [['owner_id'], 'integer']
         ];
     }
 
@@ -41,6 +44,55 @@ class Comment extends ActiveRecord
             'id' => 'ID',
             'text' => 'Текст комментария',
         ];
+    }
+
+    /**
+     * Возвращает список комментариев
+     *
+     * @param Comments $model
+     * @return Comments[]
+     */
+    public static function getCommentsList(string $encodeData)
+    {
+        $data = self::decodeOwnerData($encodeData);
+
+        return self::find()
+            ->andWhere(['owner_class' => $data[0]])
+            ->andWhere(['owner_id' => $data[1]])
+            ->all();
+    }
+
+    /**
+     * Возвращает ActiveQuery модели Комментариев
+     *
+     * @param Comments $model
+     * @return CommentQuery
+     */
+    public static function getCommentsQueryByModel(Comments $model)
+    {
+        return self::find()
+            ->andWhere(['owner_class' => $model->getClass()])
+            ->andWhere(['owner_id' => $model->getId()]);
+    }
+
+    /**
+     * @param string $encodeData
+     * @return false|string[]
+     */
+    public static function decodeOwnerData(string $encodeData)
+    {
+        $decode = base64_decode($encodeData);
+
+        return explode(':', $decode);
+    }
+
+    /**
+     * @param Comments $model
+     * @return string
+     */
+    public static function encodeOwnerData(Comments $model)
+    {
+        return base64_encode($model->getClass() . ':' . $model->getId());
     }
 
     /**

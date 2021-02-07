@@ -13,6 +13,7 @@ services:
     volumes:
       - ./docker/mysql/logs:/var/log/mysql
       - ./docker/mysql/data:/var/lib/mysql
+      - ./docker/container/mysql/mysql.cnf:/etc/mysql/conf.d/my.cnf
     environment:
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
       MYSQL_DATABASE: '${MYSQL_DATABASE}'

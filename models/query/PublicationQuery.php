@@ -2,18 +2,15 @@
 
 namespace app\models\query;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[\app\models\Publication]].
  *
  * @see \app\models\Publication
  */
-class PublicationQuery extends \yii\db\ActiveQuery
+class PublicationQuery extends ActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
     /**
      * {@inheritdoc}
      * @return \app\models\Publication[]|array
