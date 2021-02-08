@@ -49,16 +49,18 @@ class Comment extends ActiveRecord
     /**
      * Возвращает список комментариев
      *
-     * @param Comments $model
+     * @param string $encodeData
+     * @param string[] $select
      * @return Comments[]
      */
-    public static function getCommentsList(string $encodeData)
+    public static function getCommentsList(string $encodeData, $select = ['*'])
     {
         $data = self::decodeOwnerData($encodeData);
 
         return self::find()
+            ->select($select)
             ->andWhere(['owner_class' => $data[0]])
-            ->andWhere(['owner_id' => $data[1]])
+            ->andWhere(['owner_id' => (int)$data[1]])
             ->all();
     }
 
@@ -66,11 +68,13 @@ class Comment extends ActiveRecord
      * Возвращает ActiveQuery модели Комментариев
      *
      * @param Comments $model
+     * @param string[] $select
      * @return CommentQuery
      */
-    public static function getCommentsQueryByModel(Comments $model)
+    public static function getCommentsQueryByModel(Comments $model, $select = ['*'])
     {
         return self::find()
+            ->select($select)
             ->andWhere(['owner_class' => $model->getClass()])
             ->andWhere(['owner_id' => $model->getId()]);
     }

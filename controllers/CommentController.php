@@ -10,7 +10,7 @@ class CommentController extends Controller
 {
     public function actionIndex(string $encodeOwner)
     {
-        $comments = Comment::getCommentsList($encodeOwner);
+        $comments = Comment::getCommentsList($encodeOwner, ['text']);
 
         return $this->renderPartial('index', [
             'comments' => $comments,
