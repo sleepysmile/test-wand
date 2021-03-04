@@ -2,6 +2,7 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$authManager = require __DIR__ . '/_authManager.php';
 
 $config = [
     'id' => 'basic-console',
@@ -26,6 +27,7 @@ $config = [
             ],
         ],
         'db' => $db,
+        'authManager' => $authManager,
     ],
     'params' => $params,
     /*
