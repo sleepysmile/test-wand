@@ -2,6 +2,8 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\User;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 
 /**
@@ -15,6 +17,17 @@ class DefaultController extends AdminController
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $dataProvider = new ActiveDataProvider([
+            'query' => User::find()
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider
+        ]);
+    }
+
+    public function actionExample()
+    {
+        return $this->render('example');
     }
 }

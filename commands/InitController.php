@@ -3,6 +3,7 @@
 namespace app\commands;
 
 use app\models\User;
+use app\models\UserStatus;
 use Yii;
 use yii\console\Controller;
 use yii\console\ExitCode;
@@ -20,6 +21,7 @@ class InitController extends Controller
         $admin = new User();
         $admin->username = 'webmaster';
         $admin->email = 'webmaster@ya.ru';
+        $admin->status = UserStatus::STATUS_ACTIVE;
         $admin->generateAuthKey();
         $admin->setPassword('webmaster');
 
@@ -31,6 +33,7 @@ class InitController extends Controller
         $user = new User();
         $user->username = 'user';
         $user->email = 'user@ya.ru';
+        $admin->status = UserStatus::STATUS_ACTIVE;
         $user->generateAuthKey();
         $user->setPassword('user');
 

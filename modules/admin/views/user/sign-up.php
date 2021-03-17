@@ -9,11 +9,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div>
-    <?php $form = ActiveForm::begin([
-        'options' => [
-            'class' => 'form-horizontal'
-        ]
-    ]); ?>
+    <?php $form = ActiveForm::begin(); ?>
 
         <?= $form->field($singup, 'username')->textInput(); ?>
 

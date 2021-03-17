@@ -4,6 +4,7 @@ namespace app\modules\admin\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 
 /**
@@ -22,27 +23,13 @@ class AdminController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['login', 'sign-up'],
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['logout'],
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'logout' => [
+                        'post',
                     ],
                 ],
-                'denyCallback' => function($rule, $action) {
-                    Yii::$app->response->redirect(['/admin/user/sign-up']);
-                },
             ],
         ];
     }

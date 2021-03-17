@@ -3,6 +3,7 @@
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 $authManager = require __DIR__ . '/_authManager.php';
+$log = require __DIR__ . '/_log.php';
 
 $config = [
     'id' => 'basic-console',
@@ -18,14 +19,7 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'log' => [
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
+        'log' => $log,
         'db' => $db,
         'authManager' => $authManager,
     ],

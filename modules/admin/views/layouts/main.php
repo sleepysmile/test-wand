@@ -1,16 +1,15 @@
 <?php
 
-/* @var $this \yii\web\View */
-
+/** @var \yii\web\View $this */
 /* @var $content string */
 
-use app\assets\AppAsset;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
+use app\modules\admin\assets\AdminAssets;
 use yii\helpers\Html;
 
-AppAsset::register($this);
+AdminAssets::register($this);
+
 ?>
+
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
@@ -21,37 +20,31 @@ AppAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <script src="https://kit.fontawesome.com/f102d8fbc4.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <?php $this->beginBody() ?>
 
-<?php NavBar::begin([
-    'brandLabel' => Yii::$app->name,
-    'brandUrl' => Yii::$app->homeUrl,
-    'options' => [
-        'class' => 'navbar-inverse navbar-fixed-top',
-    ],
-]); ?>
+<?= $this->render('_nav'); ?>
 
-<?php try {
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            [
-                'label' => 'Home',
-                'url' => 'site/index'
-            ],
-        ],
-    ]);
-} catch (\Throwable $e) {
-    Yii::error($e->getMessage());
-} ?>
+<?= $this->render('_menu'); ?>
 
-<?php NavBar::end(); ?>
+<div class="mcw">
+    <div class="cv">
+        <div>
+            <div class="inbox">
+                <div class="inbox-bx container-fluid">
+                    <div class="row">
 
-<div class="wrap">
-    <div class="container">
-        <?= $content ?>
+                        <?= $this->render('_subMenu'); ?>
+
+                        <div class="col-md-9">
+                            <?= $content ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

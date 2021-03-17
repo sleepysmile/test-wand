@@ -2,10 +2,13 @@
 
 namespace app\models;
 
+use MongoDB\Driver\Exception\AuthenticationException;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\rbac\BaseManager;
+use yii\rbac\DbManager;
 use yii\web\IdentityInterface;
 
 /**
@@ -89,6 +92,14 @@ class User extends ActiveRecord implements IdentityInterface
             ->one();
     }
 
+    public static function findByUsername(string $username): User
+    {
+        return static::find()
+            ->andWhere(['status' => UserStatus::STATUS_ACTIVE])
+            ->andWhere(['username' => $username])
+            ->one();
+    }
+
     /**
      * @param mixed $token
      * @param null $type
@@ -154,6 +165,16 @@ class User extends ActiveRecord implements IdentityInterface
     public function setPassword($password)
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+    }
+
+    /**
+     * Проверяет пользователя на роль админа
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return Yii::$app->authManager->checkAccess($this->id, 'admin');
     }
 
 }

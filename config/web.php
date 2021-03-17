@@ -5,15 +5,38 @@ $db = require __DIR__ . '/db.php';
 $urlManager = require __DIR__ . '/_urlManager.php';
 $aliases = require __DIR__ . '/_aliases.php';
 $authManager = require __DIR__ . '/_authManager.php';
+$log = require __DIR__ . '/_log.php';
 
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'admin'],
     'aliases' => $aliases,
     'modules' => [
         'admin' => [
             'class' => 'app\modules\admin\AdminModule',
+            'as access' => [
+                'class' => 'yii\filters\AccessControl',
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['sign-in', 'sign-up'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['logout'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@', 'admin'],
+                    ],
+                ],
+                'denyCallback' => function($rule, $action) {
+                    Yii::$app->response->redirect(['/admin/user/sign-in']);
+                },
+            ],
         ],
     ],
     'components' => [
@@ -34,15 +57,7 @@ $config = [
             'class' => 'yii\swiftmailer\Mailer',
             'useFileTransport' => true,
         ],
-        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
+        'log' => $log,
         'db' => $db,
         'urlManager' => $urlManager,
         'authManager' => $authManager,
