@@ -1,15 +1,17 @@
 <?php
 
-/** @var \yii\web\View $this */
+/* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use app\modules\admin\assets\AdminAssets;
+use app\widgets\AdminMenu;
 use yii\helpers\Html;
 
+/** @var \app\models\User $user */
+$user = Yii::$app->user->identity;
 AdminAssets::register($this);
-
 ?>
-
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
@@ -19,32 +21,96 @@ AdminAssets::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
     <script src="https://kit.fontawesome.com/f102d8fbc4.js" crossorigin="anonymous"></script>
+    <?php $this->head() ?>
 </head>
 <body>
 <?php $this->beginBody() ?>
 
-<?= $this->render('_nav'); ?>
+<div class="wrapper">
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3><?= Yii::$app->name ?></h3>
+        </div>
 
-<?= $this->render('_menu'); ?>
+        <?php try {
+            echo AdminMenu::widget([
+                'submenuOptions' => [
+                    'class' => 'collapse list-unstyled'
+                ],
+                'items' => [
+                    [
+                        'label' => 'User info (' . $user->username . ')',
+                        'items' => [
+                            [
+                                'label' => 'Edit',
+                                'url' => ['/admin/user/edit'],
+                            ]
+                        ]
+                    ],
+                    [
+                        'label' => 'Home',
+                        'items' => [
+                            [
+                                'label' => 'Home',
+                                'url' => ['/admin/default/index/'],
+                            ],
+                            [
+                                'label' => 'Home',
+                                'url' => ['/admin/default/index/'],
+                            ],
+                            [
+                                'label' => 'Home',
+                                'url' => ['/admin/default/index/'],
+                            ],
+                            [
+                                'label' => 'Home',
+                                'url' => ['/admin/default/index/'],
+                            ],
+                        ],
+                    ],
+                    [
+                        'label' => 'About',
+                        'url' => ['/admin/default/example/'],
+                        'active' => true
+                    ],
+                ],
+                'options' => [
+                    'class' => 'list-unstyled components'
+                ],
+            ]);
+        } catch (\Throwable $e) {
+            Yii::error($e->getMessage());
+        } ?>
 
-<div class="mcw">
-    <div class="cv">
-        <div>
-            <div class="inbox">
-                <div class="inbox-bx container-fluid">
-                    <div class="row">
+    </nav>
 
-                        <?= $this->render('_subMenu'); ?>
+    <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fas fa-align-left"></i>
+                </button>
 
-                        <div class="col-md-9">
-                            <?= $content ?>
-                        </div>
-                    </div>
+                <?php if (array_key_exists('breadcrumbs', $this->params)): ?>
+
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="dark-blue-text">
+                            <i class="fas fa-bars fa-1x"></i>
+                        </span>
+                    </button>
+
+                <?php endif; ?>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <?= $this->render('_breadcrumbs') ?>
                 </div>
             </div>
-        </div>
+        </nav>
+
+        <?= $content ?>
     </div>
 </div>
 
@@ -52,3 +118,4 @@ AdminAssets::register($this);
 </body>
 </html>
 <?php $this->endPage() ?>
+

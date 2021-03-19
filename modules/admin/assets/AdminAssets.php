@@ -2,8 +2,7 @@
 
 namespace app\modules\admin\assets;
 
-use yii\bootstrap\BootstrapAsset;
-use yii\bootstrap\BootstrapPluginAsset;
+use yii\bootstrap4\BootstrapPluginAsset;
 use yii\web\AssetBundle;
 use yii\web\JqueryAsset;
 
@@ -21,7 +20,7 @@ class AdminAssets extends AssetBundle
 
     public $depends = [
         BootstrapPluginAsset::class,
-        JqueryAsset::class
+        JqueryAsset::class,
     ];
 
 }
