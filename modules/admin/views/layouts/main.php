@@ -34,6 +34,7 @@ AdminAssets::register($this);
 
         <?php try {
             echo AdminMenu::widget([
+                'activateParents' => true,
                 'submenuOptions' => [
                     'class' => 'collapse list-unstyled'
                 ],
@@ -44,6 +45,15 @@ AdminAssets::register($this);
                             [
                                 'label' => 'Edit',
                                 'url' => ['/admin/user/edit'],
+                            ],
+                            [
+                                'label' => 'Logout',
+                                'url' => ['/admin/user/logout'],
+                                'linkOptions' => [
+                                    'data' => [
+                                        'method' => 'post'
+                                    ]
+                                ]
                             ]
                         ]
                     ],
@@ -53,13 +63,9 @@ AdminAssets::register($this);
                             [
                                 'label' => 'Publications',
                                 'url' => ['/admin/publication/index/'],
+                                'active' => true
                             ],
                         ],
-                    ],
-                    [
-                        'label' => 'About',
-                        'url' => ['/admin/default/example/'],
-                        'active' => true
                     ],
                 ],
                 'options' => [
