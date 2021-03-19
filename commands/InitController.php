@@ -33,7 +33,7 @@ class InitController extends Controller
         $user = new User();
         $user->username = 'user';
         $user->email = 'user@ya.ru';
-        $admin->status = UserStatus::STATUS_ACTIVE;
+        $user->status = UserStatus::STATUS_ACTIVE;
         $user->generateAuthKey();
         $user->setPassword('user');
 

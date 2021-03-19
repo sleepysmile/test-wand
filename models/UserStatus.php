@@ -10,7 +10,7 @@ namespace app\models;
  */
 class UserStatus
 {
-    public const STATUS_ACTIVE = 1;
+    public const STATUS_ACTIVE = 10;
 
     public const STATUS_INACTIVE = 0;
 }
