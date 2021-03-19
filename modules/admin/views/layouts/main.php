@@ -21,7 +21,6 @@ AdminAssets::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <script src="https://kit.fontawesome.com/f102d8fbc4.js" crossorigin="anonymous"></script>
     <?php $this->head() ?>
 </head>
 <body>
@@ -49,23 +48,11 @@ AdminAssets::register($this);
                         ]
                     ],
                     [
-                        'label' => 'Home',
+                        'label' => 'Directory',
                         'items' => [
                             [
-                                'label' => 'Home',
-                                'url' => ['/admin/default/index/'],
-                            ],
-                            [
-                                'label' => 'Home',
-                                'url' => ['/admin/default/index/'],
-                            ],
-                            [
-                                'label' => 'Home',
-                                'url' => ['/admin/default/index/'],
-                            ],
-                            [
-                                'label' => 'Home',
-                                'url' => ['/admin/default/index/'],
+                                'label' => 'Publications',
+                                'url' => ['/admin/publication/index/'],
                             ],
                         ],
                     ],
@@ -89,7 +76,7 @@ AdminAssets::register($this);
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <button type="button" id="sidebarCollapse" class="btn btn-info">
-                    <i class="fas fa-align-left"></i>
+                    <i class="fa fa-align-left"></i>
                 </button>
 
                 <?php if (array_key_exists('breadcrumbs', $this->params)): ?>
